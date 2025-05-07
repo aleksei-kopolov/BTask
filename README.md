@@ -10,13 +10,13 @@ Files:
 ## Amount calculation
 In order to calculate the total amount on the Expense__c object I have decided to make changes to the underlying technical requirements. 
 
-#### Initial requeremnets for `Expense` object
+#### Initial requeremnets for Expense object
 | Name | Type | Other |
 | ------------- | ------------- | ------------- |
 | Total Amount | Number | (6,2) |
 | All Approved? | Checkbox | Default - False |
 
-#### Improved requeremnets for `Expense` object
+#### Improved requeremnets for Expense object
 | Name | Type | Other |
 | ------------- | ------------- | ------------- |
 | Approved Amount | Roll-up summary field | Ammount sum of all related Expense_Items__c that are approved  |
