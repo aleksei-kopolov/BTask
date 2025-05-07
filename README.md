@@ -7,7 +7,6 @@ Files:
 * `ExpenseTriggerHandler.cls` - Class that hold all business logic logic related to **Expense** object.
 
 
-
 ## Amount calculation
 In order to calculate the total amount on the Expense__c object I have decided to make changes to the underlying technical requirements. 
 
