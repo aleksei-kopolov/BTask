@@ -10,10 +10,10 @@ public with sharing class OverdueTaskBatchJob implements Database.Batchable<SObj
         ]);
     }
 
-    public void execute(Database.BatchableContext bc, List<Task> tasks){
+    public void execute(Database.BatchableContext bc, List<SObject> tasks){
 
-        for(Task t : tasks){
-            t.Status = 'Overdue';
+        for(SObject t : tasks){
+            t.put('Status', 'Overdue');
         }
 
         update tasks;
