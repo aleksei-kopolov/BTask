@@ -53,7 +53,7 @@ In other words the solution will not work for cases where 200 parent records are
 
 
 # Task 2
-Classes:
+Files:
 * `TaskScheduler.cls` - Class that executes batch job.
 * `OverdueTaskBatchJob.cls` - Class that processes batched Tasks.
 
