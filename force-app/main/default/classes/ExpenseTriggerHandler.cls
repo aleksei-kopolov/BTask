@@ -52,8 +52,8 @@ public virtual with sharing class ExpenseTriggerHandler extends TriggerHandler {
             SELECT Id, IsApproved__c 
             FROM Expense_Item__c 
             WHERE 
-                (Expense__c IN :expenseIdsByStatus.get(false) AND IsApproved__c = true) OR 
-                (Expense__c IN :expenseIdsByStatus.get(true) AND IsApproved__c = false)
+                (Expense__c IN :expenseIdsByStatus.get(false) AND IsApproved__c = TRUE) OR 
+                (Expense__c IN :expenseIdsByStatus.get(true) AND IsApproved__c = FALSE)
                 
             ]
         ){

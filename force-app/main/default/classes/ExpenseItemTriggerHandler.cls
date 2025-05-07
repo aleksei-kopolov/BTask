@@ -51,7 +51,7 @@ public with sharing class ExpenseItemTriggerHandler extends TriggerHandler{
     }
 
     @TestVisible
-    private Map<Id, List<Id>> getfalseStatusItemsMap(List<Expense_Item__c> items){
+    private Map<Id, List<Id>> getFalseStatusItemsMap(List<Expense_Item__c> items){
         Map<Id, List<Id>> itemIdsByExpenseId = new Map<Id, List<Id>>();
 
         for(Expense_Item__c item : items){
@@ -146,7 +146,7 @@ public with sharing class ExpenseItemTriggerHandler extends TriggerHandler{
         for(AggregateResult aggResult : [
             SELECT Expense__c, COUNT(Id)
             FROM Expense_Item__c 
-            WHERE IsApproved__c = true AND Expense__c IN :expenseIds AND Id NOT IN :itemIds
+            WHERE IsApproved__c = TRUE AND Expense__c IN :expenseIds AND Id NOT IN :itemIds
             GROUP BY Expense__c]){
             notFullyApprovedExpenseIds.add((Id) aggResult.get('Expense__c'));
         }
@@ -162,7 +162,7 @@ public with sharing class ExpenseItemTriggerHandler extends TriggerHandler{
         for(AggregateResult aggResult : [
             SELECT Expense__c, COUNT(Id)
             FROM Expense_Item__c 
-            WHERE IsApproved__c = false AND Expense__c IN :expenseIds AND Id NOT IN :itemIds
+            WHERE IsApproved__c = TRUE AND Expense__c IN :expenseIds AND Id NOT IN :itemIds
             GROUP BY Expense__c]){
             notFullyApprovedExpenseIds.add((Id) aggResult.get('Expense__c'));
         }
