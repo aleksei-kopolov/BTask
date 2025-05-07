@@ -22,5 +22,10 @@
         <members>Task</members>
         <name>CustomObject</name>
     </types>
+    <types>
+        <members>Expense</members>
+        <members>Expense_Item</members>
+        <name>FlexiPage</name>
+    </types>
     <version>63.0</version>
 </Package>
