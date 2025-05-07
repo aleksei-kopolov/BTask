@@ -26,4 +26,6 @@ The reason for making changes to the technical requirements are as followed:
 
 The down side of such changes are that users will not be able to make **direct** changes to the `Total Amount` field on the `Expense__c` object, emphasize on word **direct** as users will still be able to make indirect changes to the `Total Amount` field. An example of indirect changes would be to add a `Discount` field that will subtract it's value from the `Total Amount` field.
 
+
+
 # Task 2

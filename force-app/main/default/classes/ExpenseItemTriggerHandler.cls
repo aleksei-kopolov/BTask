@@ -26,18 +26,21 @@ public with sharing class ExpenseItemTriggerHandler extends TriggerHandler{
         if(newStatusByExpenseId.isEmpty()){return;}
 
         Map<Boolean, List<Id>> expenseIdsByOldStatus = getReversedMap(newStatusByExpenseId);
+        List<Id> expenseIdsExpecedToBeApproved = expenseIdsByOldStatus.get(true);
+        List<Id> expenseIdsExpecedToBeDeclined = expenseIdsByOldStatus.get(false);
+
         Map<Boolean, List<Id>> itemIdsByOldStatus = getItemIdsByStatus(newStatusByExpenseId, updatedItems);
 
-        Set<Id> notFullyApprovedExpenseIds = getNotFullyApprovedExpenseIds(expenseIdsByOldStatus.get(false), itemIdsByOldStatus.get(false));
-        Set<Id> notEmptyApprovedExpenseIds = getNotEmptyApprovedExpenseIds(expenseIdsByOldStatus.get(false), itemIdsByOldStatus.get(false));
+        Set<Id> notFullyApprovedExpenseIds = getNotFullyApprovedExpenseIds(expenseIdsExpecedToBeApproved, itemIdsByOldStatus.get(false));
+        Set<Id> notEmptyApprovedExpenseIds = getNotEmptyApprovedExpenseIds(expenseIdsExpecedToBeDeclined, itemIdsByOldStatus.get(false));
         
         List<Expense__c> updatedExpences = new List<Expense__c>();
         for(Expense__c expense : [
             SELECT Id, All_Approved__c
             FROM Expense__c
             WHERE 
-                (All_Approved__c = TRUE AND Id IN :expenseIdsByOldStatus.get(true) AND Id NOT IN :notEmptyApprovedExpenseIds) OR
-                (All_Approved__c = FALSE AND Id IN :expenseIdsByOldStatus.get(false) AND Id NOT IN :notFullyApprovedExpenseIds)
+                (All_Approved__c = TRUE AND Id IN :expenseIdsExpecedToBeApproved AND Id NOT IN :notEmptyApprovedExpenseIds) OR
+                (All_Approved__c = FALSE AND Id IN :expenseIdsExpecedToBeDeclined AND Id NOT IN :notFullyApprovedExpenseIds)
         ]){
             expense.All_Approved__c = !expense.All_Approved__c;
             updatedExpences.add(expense);
@@ -74,17 +77,20 @@ public with sharing class ExpenseItemTriggerHandler extends TriggerHandler{
         Map<Id, Boolean> newStatusByExpenseId = getStatusByExpenseId(updatedItems);
         
         Map<Boolean, List<Id>> expenseIdsByNewStatus = getReversedMap(newStatusByExpenseId);
-        Map<Boolean, List<Id>> itemIdsByNewStatus = getItemIdsByStatus(newStatusByExpenseId, updatedItems);
+        List<Id> expenseIdsExpecedToBeApproved = expenseIdsByOldStatus.get(true);
+        List<Id> expenseIdsExpecedToBeDeclined = expenseIdsByOldStatus.get(false);
+        
+        Map<Boolean, List<Id>> itemIdsByNewApprovedStatus = getItemIdsByStatus(newStatusByExpenseId, updatedItems);
 
-        Set<Id> notFullyApprovedExpenseIds = getNotFullyApprovedExpenseIds(expenseIdsByNewStatus.get(true), itemIdsByNewStatus.get(true));
+        Set<Id> notFullyApprovedExpenseIds = getNotFullyApprovedExpenseIds(expenseIdsExpecedToBeApproved, itemIdsByNewApprovedStatus.get(true));
 
         List<Expense__c> updatedExpences = new List<Expense__c>();
         for(Expense__c expense : [
             SELECT Id, All_Approved__c
             FROM Expense__c
             WHERE 
-                (All_Approved__c = TRUE AND Id IN :expenseIdsByNewStatus.get(false)) OR 
-                (All_Approved__c = FALSE AND Id IN :expenseIdsByNewStatus.get(true) AND Id NOT IN :notFullyApprovedExpenseIds)
+                (All_Approved__c = TRUE AND Id IN :expenseIdsExpecedToBeDeclined) OR 
+                (All_Approved__c = FALSE AND Id IN :expenseIdsExpecedToBeApproved AND Id NOT IN :notFullyApprovedExpenseIds)
         ]){
             expense.All_Approved__c = !expense.All_Approved__c;
             updatedExpences.add(expense);

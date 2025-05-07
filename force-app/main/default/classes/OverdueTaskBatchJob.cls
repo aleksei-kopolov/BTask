@@ -4,9 +4,7 @@ public with sharing class OverdueTaskBatchJob implements Database.Batchable<SObj
         return Database.getQueryLocator([
             SELECT Id, Status
             FROM Task 
-            WHERE 
-                Status NOT IN ('Completed', 'Overdue') AND 
-                ActivityDate < TODAY
+            WHERE IsClosed = FALSE AND Status != 'Overdue' AND ActivityDate < TODAY
         ]);
     }
 
