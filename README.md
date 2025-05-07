@@ -1,4 +1,12 @@
 # Task 1
+Files:
+* `ExpenseItemTrigger.trigger`
+* `ExpenseTrigger.trigger`
+* `TriggerHandler.cls` - Virtual class that all trigger handlers inherit. Helps with segregating logic and aggregate trigger data.
+* `ExpenseItemTriggerHandler.cls` - Class that hold all business logic logic related to **Expense Item** object.
+* `ExpenseTriggerHandler.cls` - Class that hold all business logic logic related to **Expense** object.
+
+
 
 ## Amount calculation
 In order to calculate the total amount on the Expense__c object I have decided to make changes to the underlying technical requirements. 
@@ -26,7 +34,6 @@ The reason for making changes to the technical requirements are as followed:
 
 The down side of such changes are that users will not be able to make **direct** changes to the `Total Amount` field on the Expense object, emphasize on word **direct** as users will still be able to make indirect changes to the `Total Amount` field. An example of indirect changes would be to add a `Discount` field that will subtract it's value from the `Total Amount` field.
 
-
 The only major limitation for this solution is that, it might rune into errors in cases of "Data Skew". "Data Skew" are cases where 1 parent has more than 10 000 children. Theoretically this is a very extreme case and if it will happen it will require a data restructuring as Salesforce heavily recommends avoiding all cases of "Data Skew".
 
 ## Approved status synchronization
@@ -45,7 +52,12 @@ The only major limitation this solution has, is for cases when a bulk of records
 
 In other words the solution will not work for cases where 200 parent records are being updated at the same time and each parent has a minimum of 250 child records that, are **NEEDED** to be updated. If hypothetically, it is expected that such cases will occur then a completely different solution will have to be used. That solution will require the development of asynchronous process, which will take significantly more development time(5x to 10x times), and will require data structure changes.
 
+
 # Task 2
+Classes:
+* `TaskScheduler.cls` - Class that executes batch job.
+* `OverdueTaskBatchJob.cls` - Class that processes batched Tasks.
+
 It's a simple batchable class that queries only the necessary Tasks and updates them in bulk, there is not much stuff to do here. The only question is how often do you want this batch to run?
 
 As for the limitations, there are only 2 of them that, come to my mind:
