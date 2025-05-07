@@ -14,7 +14,9 @@ public virtual with sharing class ExpenseTriggerHandler extends TriggerHandler {
         List<Expense_Item__c> updatedItems = getUpdatedItems(expenseIdsByStatus);
 
         if(!updatedItems.isEmpty()){
+            TriggerHandler.disableAllLogic();
             update updatedItems;
+            TriggerHandler.enableAllLogic();
         }
     }
 
