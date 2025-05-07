@@ -19,6 +19,7 @@
         <members>Expense__c</members>
         <members>Expense_Item__c</members>
         <members>Trigger_Settings__c</members>
+        <members>Task</members>
         <name>CustomObject</name>
     </types>
     <version>63.0</version>
