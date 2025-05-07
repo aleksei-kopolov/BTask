@@ -5,12 +5,6 @@ public virtual class TriggerHandler {
     protected TriggerContext triggerContext;
     
     @TestVisible
-    protected virtual DML getDML(){ return new DML(); }
-    
-    @TestVisible
-    protected DML dml = getDML();
-    
-    @TestVisible
     protected Trigger_Settings__c settings;
     
     @TestVisible
