@@ -1,18 +1,29 @@
-# Salesforce DX Project: Next Steps
+# Task 1
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+## Amount calculation
+In order to calculate the total amount on the Expense__c object I have decided to make changes to the underlying technical requirements. 
 
-## How Do You Plan to Deploy Your Changes?
+#### Initial requeremnets for `Expense` object
+| Name | Type | Other |
+| ------------- | ------------- | ------------- |
+| Total Amount | Number | (6,2) |
+| All Approved? | Checkbox | Default - False |
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+#### Improved requeremnets for `Expense` object
+| Name | Type | Other |
+| ------------- | ------------- | ------------- |
+| Approved Amount | Roll-up summary field | Ammount sum of all related Expense_Items__c that are approved  |
+| Total Amount | Formula field | If **All Approved?** equal to TRUE set value to **Approved Amount** otherwise set value to 0.0 |
+| All Approved? | Checkbox | Default - False |
 
-## Configure Your Salesforce DX Project
+The reason for making changes to the technical requirements are as followed:
+* Less development time.
+* Less testing time.
+* Less deployment time.
+* Reducing code debt by delegating functionality to an existing out-of-the-box solution.
+* Reducing the chance of a calculation error.
+* Better system performance(in comparison to a custom solution).
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+The down side of such changes are that users will not be able to make **direct** changes to the `Total Amount` field on the `Expense__c` object, emphasize on word **direct** as users will still be able to make indirect changes to the `Total Amount` field. An example of indirect changes would be to add a `Discount` field that will subtract it's value from the `Total Amount` field.
 
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+# Task 2
